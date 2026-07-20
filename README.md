@@ -1,27 +1,35 @@
-# API Usuários — User Management REST API
+# 👤 API Usuários — User Management REST API
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.139-009688)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-database-336791)
+![Alembic](https://img.shields.io/badge/Alembic-migrations-6BA81E)
+
+🇧🇷 [Leia em Português](README.pt-br.md) | 🇺🇸 Read in English
 
 A REST API for user management, built with **FastAPI** and **PostgreSQL**, featuring secure authentication and a fully versioned database schema.
 
-## Features
+## ✨ Features
 
-- User registration and management
-- JWT-based authentication
-- Password hashing with bcrypt
-- Database schema versioning with Alembic migrations
-- Data validation with Pydantic
+- 👤 User registration and management
+- 🔐 JWT-based authentication
+- 🔑 Password hashing with bcrypt
+- 🗃️ Database schema versioning with Alembic migrations
+- ✅ Data validation with Pydantic
 
-## Tech Stack
+## 🧰 Tech Stack
 
-- **FastAPI** — web framework for building the API
-- **SQLAlchemy 2.0** — ORM for database access
-- **Alembic** — database migration management
-- **PostgreSQL** (via `psycopg2-binary`) — relational database
-- **Pydantic / pydantic-settings** — data validation and configuration management
-- **python-jose** — JWT token creation and validation
-- **passlib / bcrypt** — secure password hashing
-- **Uvicorn** — ASGI server
+| Category | Technology |
+|---|---|
+| Web Framework | **FastAPI** |
+| ORM | **SQLAlchemy 2.0** |
+| Migrations | **Alembic** |
+| Database | **PostgreSQL** (via `psycopg2-binary`) |
+| Validation & Config | **Pydantic** / `pydantic-settings` |
+| Authentication | **python-jose** (JWT), **passlib** + **bcrypt** |
+| Server | **Uvicorn** (ASGI) |
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -65,7 +73,7 @@ A REST API for user management, built with **FastAPI** and **PostgreSQL**, featu
 
 The API will be available at `http://localhost:8000`, with interactive documentation at `http://localhost:8000/docs` (Swagger UI).
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 api_usuarios/
@@ -76,7 +84,27 @@ api_usuarios/
 └── requirements.txt      # Python dependencies
 ```
 
-## What I Learned
+## 🛠️ Architecture and Best Practices
+
+This project was developed with a focus on maintainability, readability, and security, applying the following principles:
+
+### 📐 SOLID Principles
+- **Single Responsibility Principle (SRP):** clear separation between routing, business logic, and data persistence layers.
+- **Dependency Inversion:** FastAPI's dependency injection (`Depends`) is used to decouple route handlers from concrete database sessions and services.
+
+### ♻️ DRY (Don't Repeat Yourself)
+- Shared logic (authentication, database session handling, validation schemas) is centralized rather than duplicated across endpoints.
+
+### 🔐 Security
+- Passwords are never stored in plain text — hashed with **bcrypt** via `passlib`.
+- Authentication handled with signed **JWT** tokens (`python-jose`).
+- Sensitive configuration (database credentials, secret keys) kept out of version control via `.env`.
+
+### 🐍 Code Style (PEP 8)
+- Standardized naming conventions: `snake_case` for functions/variables, `PascalCase` for classes.
+- Data validation and serialization handled declaratively through **Pydantic** models.
+
+## 📚 What I Learned
 
 Building this project helped me deepen my understanding of REST API design with FastAPI, secure authentication flows with JWT, and managing evolving database schemas with Alembic migrations in a PostgreSQL environment.
 

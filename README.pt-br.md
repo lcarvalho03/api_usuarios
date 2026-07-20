@@ -1,27 +1,35 @@
-# API Usuários — API REST de Gerenciamento de Usuários
+# 👤 API Usuários — API REST de Gerenciamento de Usuários
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.139-009688)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-database-336791)
+![Alembic](https://img.shields.io/badge/Alembic-migrations-6BA81E)
+
+🇧🇷 Leia em Português | 🇺🇸 [Read in English](README.md)
 
 Uma API REST para gerenciamento de usuários, construída com **FastAPI** e **PostgreSQL**, com autenticação segura e versionamento completo do esquema do banco de dados.
 
-## Funcionalidades
+## ✨ Funcionalidades
 
-- Cadastro e gerenciamento de usuários
-- Autenticação baseada em JWT
-- Hash de senhas com bcrypt
-- Versionamento do esquema do banco de dados com migrações Alembic
-- Validação de dados com Pydantic
+- 👤 Cadastro e gerenciamento de usuários
+- 🔐 Autenticação baseada em JWT
+- 🔑 Hash de senhas com bcrypt
+- 🗃️ Versionamento do esquema do banco de dados com migrações Alembic
+- ✅ Validação de dados com Pydantic
 
-## Tecnologias Utilizadas
+## 🧰 Tecnologias Utilizadas
 
-- **FastAPI** — framework web para construção da API
-- **SQLAlchemy 2.0** — ORM para acesso ao banco de dados
-- **Alembic** — gerenciamento de migrações do banco de dados
-- **PostgreSQL** (via `psycopg2-binary`) — banco de dados relacional
-- **Pydantic / pydantic-settings** — validação de dados e gerenciamento de configurações
-- **python-jose** — criação e validação de tokens JWT
-- **passlib / bcrypt** — hash seguro de senhas
-- **Uvicorn** — servidor ASGI
+| Categoria | Tecnologia |
+|---|---|
+| Framework Web | **FastAPI** |
+| ORM | **SQLAlchemy 2.0** |
+| Migrações | **Alembic** |
+| Banco de Dados | **PostgreSQL** (via `psycopg2-binary`) |
+| Validação e Configuração | **Pydantic** / `pydantic-settings` |
+| Autenticação | **python-jose** (JWT), **passlib** + **bcrypt** |
+| Servidor | **Uvicorn** (ASGI) |
 
-## Como Começar
+## 🚀 Como Começar
 
 ### Pré-requisitos
 
@@ -65,7 +73,7 @@ Uma API REST para gerenciamento de usuários, construída com **FastAPI** e **Po
 
 A API ficará disponível em `http://localhost:8000`, com documentação interativa em `http://localhost:8000/docs` (Swagger UI).
 
-## Estrutura do Projeto
+## 📁 Estrutura do Projeto
 
 ```
 api_usuarios/
@@ -76,7 +84,27 @@ api_usuarios/
 └── requirements.txt      # Dependências do Python
 ```
 
-## O que Aprendi
+## 🛠️ Arquitetura e Boas Práticas
+
+Este projeto foi desenvolvido com foco em manutenibilidade, legibilidade e segurança, aplicando os seguintes princípios:
+
+### 📐 Princípios SOLID
+- **Princípio da Responsabilidade Única (SRP):** separação clara entre as camadas de rotas, lógica de negócio e persistência de dados.
+- **Inversão de Dependência:** a injeção de dependências do FastAPI (`Depends`) é usada para desacoplar os handlers de rota das sessões de banco de dados e serviços concretos.
+
+### ♻️ DRY (Não se Repita)
+- Lógica compartilhada (autenticação, gerenciamento de sessão do banco, esquemas de validação) é centralizada em vez de duplicada entre os endpoints.
+
+### 🔐 Segurança
+- Senhas nunca são armazenadas em texto puro — são convertidas em hash com **bcrypt** via `passlib`.
+- Autenticação feita com tokens **JWT** assinados (`python-jose`).
+- Configurações sensíveis (credenciais do banco, chaves secretas) mantidas fora do controle de versão através do `.env`.
+
+### 🐍 Estilo de Código (PEP 8)
+- Convenções de nomenclatura padronizadas: `snake_case` para funções/variáveis, `PascalCase` para classes.
+- Validação e serialização de dados feitas de forma declarativa através de modelos **Pydantic**.
+
+## 📚 O que Aprendi
 
 Construir este projeto me ajudou a aprofundar meu entendimento sobre design de APIs REST com FastAPI, fluxos de autenticação segura com JWT, e gerenciamento de esquemas de banco de dados em evolução com migrações Alembic em ambiente PostgreSQL.
 
