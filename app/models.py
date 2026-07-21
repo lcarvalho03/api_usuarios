@@ -36,7 +36,6 @@ class Usuario(Base):
 
     alterado_em = Column(
         DateTime(timezone=True),
-        server_default=functions.current_timestamp(),
         onupdate=functions.current_timestamp(),
-        nullable=False,
+        nullable=True,
     )

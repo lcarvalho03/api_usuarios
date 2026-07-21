@@ -36,6 +36,39 @@ class UsuarioCreate(UsuarioBase):
     senha: str = Field(..., min_length=6, max_length=32)
 
 
+class UsuarioUpdate(BaseModel):
+    """Contrato de dados para atualização parcial ou total dos dados de um Usuário.
+
+    Permite que qualquer campo cadastral seja alterado individualmente. Todos os
+    campos são opcionais para possibilitar atualizações parciais (PATCH/PUT) sem
+    a obrigatoriedade de reintroduzir os dados não modificados.
+    """
+
+    nome: Optional[str] = Field(None, min_length=3, max_length=50)
+    sobre_nome: Optional[str] = Field(None, min_length=3, max_length=50)
+    email: Optional[EmailStr] = None
+    data_nascimento: Optional[date] = None
+    senha: Optional[str] = Field(None, min_length=6, max_length=32)
+
+    @field_validator("data_nascimento")
+    @classmethod
+    def validar_data_nascimento(cls, v: Optional[date]) -> Optional[date]:
+        """Garante que a nova data de nascimento não seja posterior à data de hoje.
+
+        Args:
+            v (Optional[date]): A data fornecida no corpo da requisição.
+
+        Returns:
+            Optional[date]: A data validada se for anterior ou igual a hoje.
+
+        Raises:
+            ValueError: Se a data informada for uma data futura.
+        """
+        if v is not None and v > date.today():
+            raise ValueError("A data de nascimento não pode ser posterior à data de hoje.")
+        return v
+
+
 class UsuarioResponse(UsuarioBase):
     """Contrato de dados retornado pela API nas respostas HTTP.
 
@@ -46,7 +79,7 @@ class UsuarioResponse(UsuarioBase):
     eh_ativo: bool
     eh_admin: bool
     criado_em: datetime
-    alterado_em: datetime
+    alterado_em: Optional[datetime] = None
 
     # Configuração para o Pydantic ler os objetos do SQLAlchemy automaticamente
     model_config = {"from_attributes": True}
