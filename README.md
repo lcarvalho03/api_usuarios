@@ -77,11 +77,18 @@ The API will be available at `http://localhost:8000`, with interactive documenta
 
 ```
 api_usuarios/
-├── alembic/           # Database migration scripts
+├── alembic/            # Database migration scripts
 ├── app/                # Application source code
+│   ├── routers/        # HTTP Endpoints (FastAPI APIRouter)
+│   ├── config.py       # Pydantic Settings environment configuration
+│   ├── database.py     # SQLAlchemy engine & session setup
+│   ├── models.py       # SQLAlchemy ORM models
+│   ├── repositories.py # Repository Pattern (Data access layer)
+│   ├── schemas.py      # Pydantic v2 DTOs & validations
+│   └── security.py     # Password hashing & security utilities
 ├── .env.example        # Example environment variables
-├── alembic.ini          # Alembic configuration
-└── requirements.txt      # Python dependencies
+├── alembic.ini         # Alembic configuration
+└── requirements.txt    # Python dependencies
 ```
 
 ## 🛠️ Architecture and Best Practices
