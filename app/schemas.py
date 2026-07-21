@@ -20,9 +20,9 @@ class UsuarioBase(BaseModel):
     @field_validator("data_nascimento")
     @classmethod
     def validar_data_nascimento(cls, v: Optional[date]) -> Optional[date]:
-        """Garante que a data de nascimento não seja no futuro."""
+        """Garante que a data de nascimento não seja posterior à data de hoje."""
         if v is not None and v > date.today():
-            raise ValueError("A data de nascimento não pode ser no futuro.")
+            raise ValueError("A data de nascimento não pode ser posterior à data de hoje.")
         return v
 
 

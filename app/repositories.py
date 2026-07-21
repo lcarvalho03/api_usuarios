@@ -28,7 +28,7 @@ class UsuarioRepository:
             usuario_id (int): Identificador único do usuário.
 
         Returns:
-            Optional[Usuario]: O usuário encontrado ou None caso não exista.
+            Optional[Usuario]: O usuário encontrado ou None, caso não exista.
         """
         return self.db.query(Usuario).filter(Usuario.id == usuario_id).first()
 
@@ -39,7 +39,7 @@ class UsuarioRepository:
             email (str): E-mail cadastrado do usuário.
 
         Returns:
-            Optional[Usuario]: O usuário encontrado ou None caso não exista.
+            Optional[Usuario]: O usuário encontrado ou None, caso não exista.
         """
         return self.db.query(Usuario).filter(Usuario.email == email).first()
 

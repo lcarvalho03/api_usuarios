@@ -1,0 +1,15 @@
+[tool.pylint.format]
+max-line-length = 120
+
+[tool.pylint."messages control"]
+disable = [
+    "no-member",  # falso positivo recorrente com o objeto dinâmico alembic.context
+]
+
+[tool.pylint.basic]
+# Nomes que seguem convenções de outras bibliotecas (ex: SQLAlchemy), não constantes reais
+good-names = ["SessionLocal"]
+
+[tool.pylint.main]
+# Ajuste conforme a estrutura do seu projeto, se necessário
+# ignore-paths = ["^alembic/versions/.*$"]
