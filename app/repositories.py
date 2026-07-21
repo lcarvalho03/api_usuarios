@@ -7,7 +7,7 @@ persistência no banco de dados com SQLAlchemy, isolando a camada HTTP.
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from app.models import Usuario
-from app.schemas import UsuarioCreate
+from app.schemas import UsuarioCreate, UsuarioUpdate
 
 
 class UsuarioRepository:
@@ -76,3 +76,47 @@ class UsuarioRepository:
         self.db.commit()
         self.db.refresh(db_usuario)
         return db_usuario
+
+    def update(
+        self,
+        usuario: Usuario,
+        usuario_data: UsuarioUpdate,
+        hashed_password: Optional[str] = None,
+    ) -> Usuario:
+        """Atualiza no banco de dados os atributos modificados de uma entidade Usuario.
+
+        Aplica apenas os campos que foram explicitamente informados no schema de
+        atualização, preservando os demais atributos atuais do modelo.
+
+        Args:
+            usuario (Usuario): A instância do usuário carregada do banco de dados.
+            usuario_data (UsuarioUpdate): Objeto Pydantic com os campos a serem alterados.
+            hashed_password (Optional[str], optional): Novo hash da senha caso a senha tenha
+                sido alterada. Padrão é None.
+
+        Returns:
+            Usuario: A instância do usuário com seus dados atualizados e persistidos.
+        """
+        update_dict = usuario_data.model_dump(exclude_unset=True)
+
+        if "senha" in update_dict:
+            del update_dict["senha"]
+
+        if hashed_password is not None:
+            usuario.hashed_password = hashed_password
+
+        for field, value in update_dict.items():
+            setattr(usuario, field, value)
+
+        self.db.commit()
+        self.db.refresh(usuario)
+        return usuario
+
+    def delete(self, usuario: Usuario) -> None:
+        """Remove permanentemente um registro de usuário do banco de dados PostgreSQL.
+
+        Args:
+            usuario (Usuario): A instância da entidade Usuario a ser excluída.
+        """
+        self.db.delete(usuario)
+        self.db.commit()
